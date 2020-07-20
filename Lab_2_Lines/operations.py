@@ -3,13 +3,13 @@ import struct
 
 
 class Renderer:
-    def __init__(self, builders:dict):
+    def __init__(self, builders: dict):
         """Initializes the class
         Args:
             builders (dict): Brings the parameters needed to start the object
         Raises:
             Exception: Throws an exception if the object couldn't be created
-        """           
+        """
         if self.glinit(builders):
             print('Parameters introduced correctly.')
             self.__f = open(self.__file_name, 'bw')
@@ -17,13 +17,13 @@ class Renderer:
         else:
             raise Exception('Parameters couldn\'t be used to create object')
 
-    def glinit(self, builders:dict):
+    def glinit(self, builders: dict):
         """Initializes the object formally
         Args:
             builders (dict): Parameters
         Returns:
             bool: returns true if it was well made
-        """        
+        """
         try:
             self.__canvas = (builders['width'], builders['height'])
             self.__viewport = (builders['viewport_x'], builders['viewport_y'],
@@ -40,14 +40,14 @@ class Renderer:
         except:
             return False
 
-    def convert(self, argument:int, conversion_type:int):
+    def convert(self, argument: int, conversion_type: int):
         """Converts the different values to different struct types
         Args:
             argument (int): value to be processed
             conversion_type (int): What kind of data type must be taken back
         Returns:
             struct: Converted value
-        """        
+        """
         if conversion_type == 1:
             return struct.pack('=c', argument.encode('ascii'))
         elif conversion_type == 2:
@@ -55,7 +55,7 @@ class Renderer:
         elif conversion_type == 3:
             return struct.pack('=h', argument)
 
-    def gl_create_window(self, width:int, height:int):
+    def gl_create_window(self, width: int, height: int):
         """Creates a window so that stuff can be drawn.
         Args:
             width (int): The frame width
@@ -95,14 +95,14 @@ class Renderer:
         except:
             return False
 
-    def gl_view_port(self, x:int, y:int, height:int, width:int):
+    def gl_view_port(self, x: int, y: int, height: int, width: int):
         """Allows the viewport to be created inside the frame
         Args:
             x (int): X-Value position of the bottom left corner
             y (int): Y-Value position of the bottom left corner
             height (int): Height of the viewport
             width (int): Width of the viewport
-        """        
+        """
         for x in range(width):
             for y in range(height):
                 self.__framebuffer[y + self.__viewport[3]][x +
@@ -114,7 +114,7 @@ class Renderer:
         """Allows the frame to clean itself with a single color
         Returns:
             bool: True if it was able to do so
-        """        
+        """
         try:
             self.__f_clear = open('cleared_picture.bmp', 'bw')
             self.__f_clear.write(self.convert('B', 1))
@@ -140,7 +140,7 @@ class Renderer:
 
             self.__framebuffer = [
                 [bytes([self.__clear_color[2], self.__clear_color[1], self.__clear_color[0]])  # TODO: CHANGE THE COLOR SO THAT IT CAN BE CHOSEN BY THE USER
-                for i in range(self.__canvas[0])]
+                 for i in range(self.__canvas[0])]
                 for j in range(self.__canvas[1])
             ]
 
@@ -152,7 +152,7 @@ class Renderer:
         except:
             return False
 
-    def gl_clear_color(self, r:int, g:int, b:int):
+    def gl_clear_color(self, r: int, g: int, b: int):
         """Allows the clear color to be changed
         Args:
             r (int): RED value for the clear
@@ -160,19 +160,19 @@ class Renderer:
             b (int): BLUE value for the clear
         Returns:
             bool: TRUE if changed
-        """        
+        """
         try:
             self.__clear_color = [b, g, r]
             return True
         except:
             return False
 
-    def gl_vertex(self, x:float, y:float):
+    def gl_vertex(self, x: float, y: float):
         """Allows the point to be generated somewhere inside the viewport
         Args:
             x (float): Must be between -1 and 1 and relative to the width. 
             y (float): Must be between -1 and 1 and relative to the width.
-        """        
+        """
         y_index = int(
             self.__viewport[2] + self.__viewport[1]/2 + (y * (self.__viewport[1]/2)))
         x_index = int(
@@ -180,18 +180,18 @@ class Renderer:
         self.__framebuffer[int(x_index)][int(
             y_index)] = bytes(self.__point_color)
 
-    def gl_color(self, r:int, g:int, b:int):
+    def gl_color(self, r: int, g: int, b: int):
         """Changes the color on run-time
         Args:
             g (int): GREEN value for the point
             r (int): RED value for the point
             b (int): BLUE value for the point
-        """        
+        """
         self.__point_color = [b, g, r]
 
     def gl_finish(self):
         """Ends the program and closes any files. 
-        """        
+        """
         for x in range(self.__canvas[0]):
             for y in range(self.__canvas[1]):
                 self.__f.write(self.__framebuffer[y][x])

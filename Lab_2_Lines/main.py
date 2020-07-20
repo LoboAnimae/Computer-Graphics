@@ -1,3 +1,10 @@
+""" This is almost the same program as the point program, but with some major differences.
+    For example, this program will allow the user to create lines, unlike the past.
+    The flow has been changed to make these changes useful, given that, without them,
+    the program would only draw one point. 
+
+"""
+
 from operations import Renderer
 import line_operations
 import math
@@ -14,6 +21,7 @@ clear_color = [0, 0, 0]
 point_color = [0, 0, 0]
 x_coords = [-0.5, 0.5]
 y_coords = [-0.5, 0.5]
+
 
 def entry_point(failure=False):
     """Entry point of the program. It's whatever the user sees for the 
@@ -51,21 +59,26 @@ def entry_point(failure=False):
         print('An error has occurred: ' + str(e))
         entry_point(True)
 
+
 def change_line():
     global x_coords
     global y_coords
     x_coords[0] = float(input('Please input your X1 value: '))
     while x_coords[0] < -1 or x_coords[0] > 1:
-        x_coords[0] = float(input('Please input your X1 value that is between -1 and 1: '))
+        x_coords[0] = float(
+            input('Please input your X1 value that is between -1 and 1: '))
     x_coords[1] = float(input('Please input your X2 value: '))
     while x_coords[1] < -1 or x_coords[1] > 1:
-        x_coords[1] = float(input('Please input an X2 value that is between -1 and 1: '))
+        x_coords[1] = float(
+            input('Please input an X2 value that is between -1 and 1: '))
     y_coords[0] = float(input('Please input your Y1 value: '))
     while y_coords[0] < -1 or y_coords[0] > 1:
-        y_coords[0] = float(input('Please input an Y1 value that is between -1 and 1: '))
+        y_coords[0] = float(
+            input('Please input an Y1 value that is between -1 and 1: '))
     y_coords[1] = float(input('Please input your Y2 value: '))
     while y_coords[1] < -1 or y_coords[1] > 1:
-        y_coords[1] = float(input('Please input an X2 value that is between -1 and 1: '))
+        y_coords[1] = float(
+            input('Please input an X2 value that is between -1 and 1: '))
 
 
 def choose_values():
@@ -182,7 +195,7 @@ def main():
     option5 = '6. Exit Program'
     choice = 0
     runtime = True
-    
+
     while runtime:
         print(menu + '\n' + option1 + '\n' +
               option2 + '\n' + option3 + '\n' + option25 + '\n' + option4 + '\n' + option5)
@@ -202,7 +215,7 @@ def main():
                 'viewport_coords': viewport_upper_left,
                 'rgb': rgb,
                 'clear': clear_color,
-                'point_color': point_color, 
+                'point_color': point_color,
                 'x': x_coords,
                 'y': y_coords
             }
@@ -253,10 +266,11 @@ def main():
                 'viewport_coords': viewport_upper_left,
                 'rgb': rgb,
                 'clear': clear_color,
-                'point_color': point_color, 
+                'point_color': point_color,
             }
             image_creator = Renderer(builders)
-            line = line_operations.glLine(x_coords[0], x_coords[1], y_coords[0], y_coords[1])
+            line = line_operations.glLine(
+                x_coords[0], x_coords[1], y_coords[0], y_coords[1])
             for point in line:
                 print(point)
                 image_creator.gl_vertex(point[0], point[1])
@@ -268,9 +282,7 @@ def main():
             # for point in line:
             #     image_creator.gl_vertex()
 
-
         elif choice == 6:
-            runtime = False
             exit(0)
         else:
             print('You somehow ended here. Congrats.')
@@ -286,7 +298,7 @@ def change_value_clear(r, g, b):
         b (int): Value for blue
     Returns:
         bool: returns True if nothing bad has happened
-    """    
+    """
     global clear_color
     clear_color = [r, g, b]
     return True
@@ -310,7 +322,7 @@ def set_values(width=200, height=200, sub_width=50, sub_height=50, x=-0.5, y=-0.
         green_point (int, optional): GREEN value for the point. Defaults to 0.
         blue_point (int, optional): BLUE value for the point. Defaults to 0.
         clear_color_array (list, optional): Array with the clear value codes. Defaults to [255, 255, 255].
-    """    
+    """
     try:
         global image_width
         global image_height
@@ -358,7 +370,8 @@ def show_values():
           (point_color[0], point_color[1], point_color[2]))
     print('Clear Colors: RGB(%d, %d, %d)' %
           (clear_color[0], clear_color[1], clear_color[2]))
-    print('Line points: x(%f - %f), y(%f - %f)' % (x_coords[1], x_coords[0], y_coords[1], y_coords[0]))
+    print('Line points: x(%f - %f), y(%f - %f)' %
+          (x_coords[1], x_coords[0], y_coords[1], y_coords[0]))
     print('----------------------------------------------------------------')
     print()
     print('\033[0;37;40m')
