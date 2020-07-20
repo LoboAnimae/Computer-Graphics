@@ -179,10 +179,6 @@ class Renderer:
             self.__viewport[3] + self.__viewport[0]/2 + (x * (self.__viewport[0]/2)))
         self.__framebuffer[int(x_index)][int(
             y_index)] = bytes(self.__point_color)
-    
-    def gl_draw_line(self, x:int, y:int):
-        self.__framebuffer[x][y] = bytes(self.__point_color)
-        
 
     def gl_color(self, r:int, g:int, b:int):
         """Changes the color on run-time

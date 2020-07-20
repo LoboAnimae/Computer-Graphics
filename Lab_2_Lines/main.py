@@ -12,8 +12,8 @@ viewport_upper_left = [0, 0]
 rgb = [0, 0, 0]
 clear_color = [0, 0, 0]
 point_color = [0, 0, 0]
-x_coords = [10, 20]
-y_coords = [10, 20]
+x_coords = [-0.5, 0.5]
+y_coords = [-0.5, 0.5]
 
 def entry_point(failure=False):
     """Entry point of the program. It's whatever the user sees for the 
@@ -54,18 +54,18 @@ def entry_point(failure=False):
 def change_line():
     global x_coords
     global y_coords
-    x_coords[0] = int(input('Please input your X1 value: '))
-    while x_coords[0] < 0:
-        x_coords[0] = int(input('Please input your X1 value that is bigger than 0: '))
-    x_coords[1] = int(input('Please input your X2 value: '))
-    while x_coords[1] > image_width - x_coords[0]:
-        x_coords[1] = int(input('Please input an X2 value smaller than %d: ' % (image_width - x_coords[0])))
-    y_coords[0] = int(input('Please input your Y1 value: '))
-    while y_coords[0] < 0:
-        y_coords[0] = int(input('Please input your Y1 value that is bigger than 0: '))
-    y_coords[1] = int(input('Please input your Y2 value: '))
-    while y_coords[1] > image_height - y_coords[0]:
-        y_coords[1] = int(input('Please input an Y2 value smaller than %d: ' % (image_height - y_coords[0])))
+    x_coords[0] = float(input('Please input your X1 value: '))
+    while x_coords[0] < -1 or x_coords[0] > 1:
+        x_coords[0] = float(input('Please input your X1 value that is between -1 and 1: '))
+    x_coords[1] = float(input('Please input your X2 value: '))
+    while x_coords[1] < -1 or x_coords[1] > 1:
+        x_coords[1] = float(input('Please input an X2 value that is between -1 and 1: '))
+    y_coords[0] = float(input('Please input your Y1 value: '))
+    while y_coords[0] < -1 or y_coords[0] > 1:
+        y_coords[0] = float(input('Please input an Y1 value that is between -1 and 1: '))
+    y_coords[1] = float(input('Please input your Y2 value: '))
+    while y_coords[1] < -1 or y_coords[1] > 1:
+        y_coords[1] = float(input('Please input an X2 value that is between -1 and 1: '))
 
 
 def choose_values():
@@ -186,7 +186,7 @@ def main():
     while runtime:
         print(menu + '\n' + option1 + '\n' +
               option2 + '\n' + option3 + '\n' + option25 + '\n' + option4 + '\n' + option5)
-        while choice < 1 or choice > 5:
+        while choice < 1 or choice > 6:
             try:
                 choice = int(input('>>> '))
             except Exception as e:
@@ -256,11 +256,13 @@ def main():
                 'point_color': point_color, 
             }
             image_creator = Renderer(builders)
-            line = line_operations.draw_line(x_coords[0], x_coords[1], y_coords[0], y_coords[1])
+            line = line_operations.glLine(x_coords[0], x_coords[1], y_coords[0], y_coords[1])
             for point in line:
-                image_creator.gl_draw_line(point[0], point[1])
+                print(point)
+                image_creator.gl_vertex(point[0], point[1])
             image_creator.gl_finish()
             image_creator.gl_clear()
+            del image_creator
             choice = 0
 
             # for point in line:
@@ -268,6 +270,7 @@ def main():
 
 
         elif choice == 6:
+            runtime = False
             exit(0)
         else:
             print('You somehow ended here. Congrats.')
@@ -355,7 +358,7 @@ def show_values():
           (point_color[0], point_color[1], point_color[2]))
     print('Clear Colors: RGB(%d, %d, %d)' %
           (clear_color[0], clear_color[1], clear_color[2]))
-    print('Line points: x(%d - %d), y(%d - %d)' % (x_coords[1], x_coords[0], y_coords[1], y_coords[0]))
+    print('Line points: x(%f - %f), y(%f - %f)' % (x_coords[1], x_coords[0], y_coords[1], y_coords[0]))
     print('----------------------------------------------------------------')
     print()
     print('\033[0;37;40m')
