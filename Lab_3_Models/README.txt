@@ -6,3 +6,5 @@ python main.py 2
 
 Models can be found in the Models folder. Processes in the lib folder.
 Processes can be found in past labs as well. 
+
+Please run it INSIDE the folder. Not anywhere else.
