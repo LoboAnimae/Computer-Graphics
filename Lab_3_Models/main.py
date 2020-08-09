@@ -1,3 +1,12 @@
+"""
+Main module.
+
+USAGE:
+    python main.py <CHOICE>
+    
+    WHERE <CHOICE> = 1 OR = 2
+"""
+
 import lib.renderer as rd
 import sys
 import os

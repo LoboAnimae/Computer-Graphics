@@ -52,4 +52,13 @@ def color(r: int, g: int, b: int):
 
 
 def finddiff(v1: int, v2: int):
+    """Finds the difference between two points. 
+
+    Args:
+        v1 (int): Usually smaller value. 
+        v2 (int): Usually bigger value. 
+
+    Returns:
+        int: Net Change between the values. 
+    """    
     return abs(v2 - v1)
